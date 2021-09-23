@@ -23,6 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "tle5012b_drive.h"
 
 /* USER CODE END Includes */
 
@@ -48,6 +49,7 @@ SPI_HandleTypeDef hspi2;
 osThreadId defaultTaskHandle;
 osThreadId myTask02Handle;
 /* USER CODE BEGIN PV */
+uint16_t ang;
 
 /* USER CODE END PV */
 
@@ -99,7 +101,7 @@ int main(void)
   MX_LPUART1_UART_Init();
   MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
-
+  TLE5012_Init( &Abs_TLE5012_M1 );
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -371,6 +373,8 @@ void StartTask02(void const * argument)
   for(;;)
   {
     osDelay(1);
+    TLE5012_read_angle( &Abs_TLE5012_M1, &ang );
+
   }
   /* USER CODE END StartTask02 */
 }
